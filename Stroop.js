@@ -17,8 +17,8 @@ define(['pipAPI'], function(APIconstructor) {
     // Transform logs into a string
     // we save as CSV because qualtrics limits to 20K characters and this is more efficient.
     serialize: function (name, logs) {
-      var headers = ['latency'];
-      var content = logs.map(function (log) { return [log.latency]; });
+      var headers = ['responce', 'latency', 'idscript'];
+      var content = logs.map(function (log) { return [log.responseHandle, log.latency, log.data.sid]; });
       content.unshift(headers);
       return toCsv(content);
       

@@ -51,13 +51,11 @@ define(['pipAPI'], function(APIconstructor) {
         instructions: {
             inst_welcome : `<p>ברוכים הבאים לניסוי הערכת משפטים</p></br>
 
-                            <p>במהלך הניסוי יוצגו לפניכם 56 משפטים. אתם תתבקשו לקרוא כול משפט, ולדמיין את עצמכם בסיטואציה המתוארת בו</p>
-                            <p>Your task is to indicate the color of each item.</p></br>
-                            
-                            <p>If the color of the item is <span style="color:${version_id===1 ? 'blue' : 'red'};">${version_id===1 ? 'blue' : 'red'}</span>, hit the <b>i</b> key with your right hand.</p>
-                            <p>If the color of the item is <span style="color:${version_id===1 ? 'red' : 'blue'};">${version_id===1 ? 'red' : 'blue'}</span>, hit the <b>e</b> key with your left hand.</p></br>
-                            
-                            <p>Please put your fingers on the keyboard to get ready</p></br>
+                            <p>במהלך הניסוי יוצגו לפניכם 56 משפטים</p>
+                            <p>אתם תתבקשו לקרוא כול משפט, ולדמיין את עצמכם בסיטואציה המתוארת בו</p></br>
+                            <p> לאחר שתסיימו לדמיין ליצו על מקש רווח </p></br>
+                            <p> המשפט יעלם מהמסך ואתם תתבקשו לענות על 9 שאלות לגבי המצב אותו דימיינתם</p></br>                          
+                            <p>את התשובות המתאימות לכם תסמנו באמצעות מקשי המספרים של המקלדת</p></br>
                             
                             <p>Press SPACE to start a short practice</p>`,
             inst_start   : `<p>The practice has now ended.</p></br>

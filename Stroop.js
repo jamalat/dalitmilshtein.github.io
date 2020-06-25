@@ -236,7 +236,7 @@ define(['pipAPI'], function(APIconstructor) {
                 conditions:[{type:'inputEquals',value:'showTarget'}],
                 actions: [
                     {type:'hideStim', handle:'fixation'}, 
-		    {type:'setInput', input:{handle:'Q1', on: 'keypressed', key: 'Q1'}},
+		    {type:'setInput', input:{handle:current.answers[0], on: 'keypressed', key: current.answers[0]}},
 		    {type:'setInput', input:{handle:current.answers[1], on: 'keypressed', key: current.answers[1]}},
 		    {type:'showStim', handle: 'target'},
                     {type:'resetTimer'},

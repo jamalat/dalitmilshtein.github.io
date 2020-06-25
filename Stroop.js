@@ -49,9 +49,9 @@ define(['pipAPI'], function(APIconstructor) {
  	    version_id   : version_id,
  	    answers      : answers,
         instructions: {
-            inst_welcome : `<p>Welcome to the experiment2!</p></br>
+            inst_welcome : `<p>ברוכים הבאים לניסוי הערכת משפטים</p></br>
 
-                            <p>We will show you items, one after the other.</p>
+                            <p>במהלך הניסוי יוצגו לפניכם 56 משפטים. אתם תתבקשו לקרוא כול משפט, ולדמיין את עצמכם בסיטואציה המתוארת בו</p>
                             <p>Your task is to indicate the color of each item.</p></br>
                             
                             <p>If the color of the item is <span style="color:${version_id===1 ? 'blue' : 'red'};">${version_id===1 ? 'blue' : 'red'}</span>, hit the <b>i</b> key with your right hand.</p>

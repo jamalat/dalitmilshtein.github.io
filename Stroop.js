@@ -239,8 +239,7 @@ define(['pipAPI'], function(APIconstructor) {
             {
                 conditions: [{type:'inputEquals', value:'targetOut'}], 
                 actions: [
-                    {type:'hideStim', handle:'target'}, 
-                    {type:'trigger', handle:'timeout', duration: '<%= current.times.response_duration %>'}
+                    {type:'hideStim', handle:'target'}
                 ]
             }, 	
 

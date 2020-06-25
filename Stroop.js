@@ -1,43 +1,90 @@
 define(['pipAPI'], function(APIconstructor) {
 
     var API     = new APIconstructor();
+    API.addSettings('onEnd', window.minnoJS.onEnd);
+
+    
+    API.addSettings('logger', {
+        // gather logs in array
+        onRow: function(logName, log, settings, ctx){
+            if (!ctx.logs) ctx.logs = [];
+            ctx.logs.push(log);
+        },
+        // onEnd trigger save (by returning a value)
+        onEnd: function(name, settings, ctx){
+            return ctx.logs;
+        },
+        // Transform logs into a string
+        // we save as CSV because qualtrics limits to 20K characters and this is more efficient.
+        serialize: function (name, logs) {
+            var headers = ['latency'];
+            var content = logs.map(function (log) { return [log.latency]; });
+            content.unshift(headers);
+            return toCsv(content);
+
+            function toCsv(matrice) { return matrice.map(buildRow).join('\n'); }
+            function buildRow(arr) { return arr.map(normalize).join(','); }
+            // wrap in double quotes and escape inner double quotes
+            function normalize(val) {
+                var quotableRgx = /(\n|,|")/;
+                if (quotableRgx.test(val)) return '"' + val.replace(/"/g, '""') + '"';
+                return val;
+            }
+        },
+        // Set logs into an input (i.e. put them wherever you want)
+        send: function(name, serialized){
+            window.minnoJS.logger(serialized);
+        }
+    });
+
+
+    var global  = API.getGlobal();
     var current = API.getCurrent();
 
-    var answers     = ['i', 'e']; // answers[0] = blue | answers[1] = red 
+    var version_id  = Math.random()>0.5 ? 2 : 1;
+    var all_answers = [['i', 'e'], ['i', 'e']];
+    var answers     = all_answers[version_id-1];
 
  	API.addCurrent({
+ 	    version_id   : version_id,
  	    answers      : answers,
         instructions: {
-            inst_welcome :  '<p>Welcome to the experiment!</p></br>'+
-                            '<p>We will show you items, one after the other.</p>'+
-                            '<p>Your task is to indicate the color of each item.</p></br>'+
-                            '<p>If the color of the item is <span style="color:blue">blue</span>, hit the <b>i</b> key with your right hand.</p>'+
-                            '<p>If the color of the item is <span style="color:red">red</span>, hit the <b>e</b> key with your left hand.</p></br>'+
-                            '<p>Please put your fingers on the keyboard to get ready</p></br>'+
-                            '<p>Press SPACE to start a short practice</p>',
-            inst_start   : '<p>The practice has now ended.</p></br>'+
+            inst_welcome : `<p>Welcome to the experiment2!</p></br>
 
-                            '<p>Remember: indicate the color of the item.</p></br>'+
+                            <p>We will show you items, one after the other.</p>
+                            <p>Your task is to indicate the color of each item.</p></br>
                             
-                            '<p>If the color of the item is <span style="color:blue">blue</span>, hit the <b>i</b> key with your right hand.</p>'+
-                            '<p>If the color of the item is <span style="color:red">red</span>, hit the <b>e</b> key with your left hand.</p></br>'+
+                            <p>If the color of the item is <span style="color:${version_id===1 ? 'blue' : 'red'};">${version_id===1 ? 'blue' : 'red'}</span>, hit the <b>i</b> key with your right hand.</p>
+                            <p>If the color of the item is <span style="color:${version_id===1 ? 'red' : 'blue'};">${version_id===1 ? 'red' : 'blue'}</span>, hit the <b>e</b> key with your left hand.</p></br>
                             
-                            '<p>Please put your fingers on the keyboard to get ready</p></br>'+
+                            <p>Please put your fingers on the keyboard to get ready</p></br>
                             
-                            '<p>Press SPACE to continue</p>',
+                            <p>Press SPACE to start a short practice</p>`,
+            inst_start   : `<p>The practice has now ended.</p></br>
 
-            inst_bye     : '<p>This is the end of the experiment</p>'+ 
-                           '<p>Thank you for your participation</p>'+
-                           '<p>To end please press SPACE</p>'
+                            <p>Remember: indicate the color of the item.</p></br>
+                            
+                            <p>If the color of the item is <span style="color:${version_id===1 ? 'blue' : 'red'};">${version_id===1 ? 'blue' : 'red'}</span>, hit the <b>i</b> key with your right hand.</p>
+                            <p>If the color of the item is <span style="color:${version_id===1 ? 'red' : 'blue'};">${version_id===1 ? 'red' : 'blue'}</span>, hit the <b>e</b> key with your left hand.</p></br>
+                            
+                            <p>Please put your fingers on the keyboard to get ready</p></br>
+                            
+                            <p>Press SPACE to continue</p>`,
+
+            inst_bye     : `<p>This is the end of the experiment</p> 
+                            <p>Thank you for your participation</p>
+                            <p>To end please press SPACE</p>`
         },
-        durations: {
-            fixation : 1000,
-            stimulus : 500,
-            response : 1000,
-            feedback : 1000,
-            iti      : 1000
+        times: {
+            fixation_duration : 1000,
+            stimulus_duration : 500,
+            response_duration : 1000,
+            feedback_duration : 1000,
+            iti_duration      : 1000
         },
         
+        minScore4exp    : 2,
+        score           : 0
 	}); 
     
     
@@ -51,6 +98,9 @@ define(['pipAPI'], function(APIconstructor) {
         canvasBackground : '#ffffff'	
     });
 
+    API.addSettings('base_url',{
+        image : global.baseURL
+    });
 
     /***********************************************
     // Stimuli
@@ -70,6 +120,54 @@ define(['pipAPI'], function(APIconstructor) {
         inst_start   : [{media: {html: current.instructions.inst_start}}],
         inst_bye     : [{media: {html: current.instructions.inst_bye}}]
     });
+
+    API.addTrialSets('endOfPractice',{
+        input: [ 
+			{handle:'end', on: 'timeout', duration: 0}
+        ],
+        interactions: [
+            {
+                conditions: [
+                    {type:'custom',fn: function(){return global.current.score < global.current.minScore4exp;}},
+                ],
+                actions: [
+                    {type:'custom',fn: function(){global.current.score=0;}},
+                    {type:'goto',destination: 'previousWhere', properties: {practice:true}},
+                    {type:'endTrial'}				
+                ]
+            },  
+            {
+                conditions: [ 
+                    {type:'custom',fn: function(){return global.current.score >= global.current.minScore4exp;}}
+                ],
+                actions: [
+                    {type:'custom',fn: function(){global.current.score=0;}},
+                    {type:'goto',destination: 'nextWhere', properties: {exp:true}},
+                    {type:'endTrial'}				
+                ]
+            },
+        ]
+    });
+
+
+    API.addTrialSets('startPractice',{
+        input: [ 
+			{handle:'end', on: 'timeout', duration: 0}
+        ],
+        interactions: [
+            {
+                conditions: [
+                    {type:'custom',fn: function(){return true;}}
+
+                ],
+                actions: [
+                    {type:'endTrial'}				
+                ]
+            }
+        ]
+    });
+
+
 
     /***********************************************
     // INSTRUCTIONS TRIAL
@@ -118,13 +216,14 @@ define(['pipAPI'], function(APIconstructor) {
     // Main trials
      ***********************************************/
 
-    API.addTrialSets('stimulus_trial',[{ 
+    API.addTrialSets('main',[{ 
+        data: {score:0},
         interactions: [
             { 
                 conditions: [{type:'begin'}],
                 actions: [
                     {type:'showStim', handle:'fixation'},
-                    {type:'trigger', handle:'showTarget', duration: '<%= current.durations.fixation %>'}
+                    {type:'trigger', handle:'showTarget', duration: '<%= current.times.fixation_duration %>'}
                 ]
             }, 
 
@@ -136,14 +235,14 @@ define(['pipAPI'], function(APIconstructor) {
 				    {type:'setInput', input:{handle:current.answers[1], on: 'keypressed', key: current.answers[1]}},
 				    {type:'showStim', handle: 'target'},
                     {type:'resetTimer'},
-                    {type:'trigger',handle:'targetOut', duration: '<%= current.durations.stimulus %>'}
+                    {type:'trigger',handle:'targetOut', duration: '<%= current.times.stimulus_duration %>'}
                 ]
             },
             {
                 conditions: [{type:'inputEquals', value:'targetOut'}], 
                 actions: [
                     {type:'hideStim', handle:'target'}, 
-                    {type:'trigger', handle:'timeout', duration: '<%= current.durations.response %>'}
+                    {type:'trigger', handle:'timeout', duration: '<%= current.times.response_duration %>'}
                 ]
             }, 	
 
@@ -153,6 +252,7 @@ define(['pipAPI'], function(APIconstructor) {
                     {type:'removeInput',handle:['All']},
                     {type:'setTrialAttr', setter:{score:1}},
                     {type:'log'},
+                    {type:'custom',fn: function(){global.current.score++;}},
                     {type:'hideStim', handle:['All']},
                     {type:'trigger', handle:'ITI'}
                 ]
@@ -164,7 +264,7 @@ define(['pipAPI'], function(APIconstructor) {
                 ],
                 actions: [
                     {type:'showStim', handle:'correct'},
-                    {type:'trigger', handle:'clean',duration: '<%= current.durations.feedback %>'}
+                    {type:'trigger', handle:'clean',duration: '<%= current.times.feedback_duration %>'}
                 ]
             }, 
             {
@@ -188,7 +288,7 @@ define(['pipAPI'], function(APIconstructor) {
                 ],
                 actions: [
                     {type:'showStim', handle:'error'},
-                    {type:'trigger', handle:'clean',duration: '<%= current.durations.feedback %>'}
+                    {type:'trigger', handle:'clean',duration: '<%= current.times.feedback_duration %>'}
 
                 ]
             }, 
@@ -209,7 +309,7 @@ define(['pipAPI'], function(APIconstructor) {
                 ],
                 actions: [
                     {type:'showStim', handle:'timeoutmessage'},
-                    {type:'trigger', handle:'clean',duration: '<%= current.durations.feedback %>'}
+                    {type:'trigger', handle:'clean',duration: '<%= current.times.feedback_duration %>'}
                 ]
             }, 
             {
@@ -223,7 +323,7 @@ define(['pipAPI'], function(APIconstructor) {
                 conditions: [{type:'inputEquals', value:'ITI'}],
                 actions:[
                     {type:'removeInput', handle:['All']},
-                    {type:'trigger', handle:'end', duration:'<%= trialData.block==="practice" ? current.durations.feedback+current.durations.iti : current.durations.iti %>'}
+                    {type:'trigger', handle:'end', duration:'<%= trialData.block==="practice" ? current.times.feedback_duration+current.times.iti_duration : current.times.iti_duration %>'}
                 ]
             },
             {
@@ -235,15 +335,21 @@ define(['pipAPI'], function(APIconstructor) {
             {inherit:'error'},
             {inherit:'correct'},
             {inherit:'timeoutmessage'},
-            {inherit:'fixation'},
-            {media: '<%= trialData.text %>', css:{fontSize: '100px', color:'<%= trialData.color %>'}, handle:'target', data:{correct:'<%= trialData.correct %>'}}
+            {inherit:'fixation'}
+
         ]
     }]);
 
     /***********************************************
-    // Stimuli
+    // Specific color trials
      ***********************************************/
 
+    API.addTrialSet('stimulus_trial', {
+        inherit: {set:'main', merge:['stimuli']},
+        stimuli: [
+            { media: '<%= trialData.text %>', css:{fontSize: '100px', color:'<%= trialData.color %>'}, handle:'target', data:{correct:'<%= trialData.correct %>'}}
+        ]
+    });
     
     
     API.addTrialSet('cong', [
@@ -267,12 +373,18 @@ define(['pipAPI'], function(APIconstructor) {
 
 	API.addSequence([
 	    {
+    		data: {practice:true},
 		    inherit : {set:"inst_welcome"}
 	    },
 	    {
+		    inherit : {set:"startPractice"}
+	    },
+	    {
+	        
 			mixer: 'random',
 			data: [
 				{   
+				    
 					mixer: 'repeat',
 					times: 1,
 					data: [
@@ -298,6 +410,11 @@ define(['pipAPI'], function(APIconstructor) {
 		},
 		
 		{
+		    inherit: {set:"endOfPractice"}
+		},
+		
+		{
+		    data: {exp:true},
 		    inherit : {set:"inst_start" }
 		},
 	    {

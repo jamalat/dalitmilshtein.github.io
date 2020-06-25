@@ -57,7 +57,7 @@ define(['pipAPI'], function(APIconstructor) {
                             <p> המשפט יעלם מהמסך ואתם תתבקשו לענות על 9 שאלות לגבי המצב אותו דימיינתם</p></br>                          
                             <p>את התשובות המתאימות לכם תסמנו באמצעות מקשי המספרים של המקלדת</p></br>
                             
-                            <p>Press SPACE to start a short practice</p>`,
+                            <p>לחצו מקש רווח על מנת להתחיל את הניסוי</p>`,
             inst_start   : `<p>The practice has now ended.</p></br>
 
                             <p>Remember: indicate the color of the item.</p></br>
@@ -69,12 +69,12 @@ define(['pipAPI'], function(APIconstructor) {
                             
                             <p>Press SPACE to continue</p>`,
 
-            inst_bye     : `<p>This is the end of the experiment</p> 
-                            <p>Thank you for your participation</p>
-                            <p>To end please press SPACE</p>`
+            inst_bye     : `<p>הניסוי הסתיים</p> 
+                            <p>תודה על השתתפותכם</p>
+                            <p>לסיום לחץ על מקש רווח</p>`
         },
         times: {
-            fixation_duration : 1000,
+            fixation_duration : 500,
             stimulus_duration : 500,
             response_duration : 1000,
             feedback_duration : 1000,
@@ -229,9 +229,9 @@ define(['pipAPI'], function(APIconstructor) {
                 conditions:[{type:'inputEquals',value:'showTarget'}],
                 actions: [
                     {type:'hideStim', handle:'fixation'}, 
-				    {type:'setInput', input:{handle:current.answers[0], on: 'keypressed', key: current.answers[0]}},
-				    {type:'setInput', input:{handle:current.answers[1], on: 'keypressed', key: current.answers[1]}},
-				    {type:'showStim', handle: 'target'},
+		    {type:'setInput', input:{handle:'Q1', on: 'keypressed', key: 'Q1'}},
+		    {type:'setInput', input:{handle:current.answers[1], on: 'keypressed', key: current.answers[1]}},
+		    {type:'showStim', handle: 'target'},
                     {type:'resetTimer'},
                     {type:'trigger',handle:'targetOut', duration: '<%= current.times.stimulus_duration %>'}
                 ]

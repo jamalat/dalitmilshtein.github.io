@@ -107,10 +107,17 @@ define(['pipAPI'], function(APIconstructor) {
     API.addStimulusSets({
         defaultStim    : [{css:{color:'black', 'font-size':'100px'}}],
         fixation       : [{inherit:'defaultStim', media: '+'}],
-        error          : [{inherit:'defaultStim', media: 'Wrong answer!'}],
-        correct        : [{inherit:'defaultStim', media: 'Correct answer!'}],
-        timeoutmessage : [{inherit:'defaultStim', media: 'Respond faster!'}]
-    });
+        Q1          : [{inherit:'defaultStim', media: 'שאלה 1'}],
+        Q2          : [{inherit:'defaultStim', media: 'שאלה 2'}],    
+	Q3          : [{inherit:'defaultStim', media: 'שאלה 3'}],
+        Q4          : [{inherit:'defaultStim', media: 'שאלה 4'}],      
+	Q5          : [{inherit:'defaultStim', media: 'שאלה 5'}],
+        Q6          : [{inherit:'defaultStim', media: 'שאלה 6'}],    
+	Q7          : [{inherit:'defaultStim', media: 'שאלה 7'}],
+        Q8          : [{inherit:'defaultStim', media: 'שאלה 8'}], 
+	Q9          : [{inherit:'defaultStim', media: 'שאלה 9'}]   
+	    
+        });
 
 
     API.addStimulusSets({
@@ -349,21 +356,28 @@ define(['pipAPI'], function(APIconstructor) {
     });
     
     
-    API.addTrialSet('cong', [
-        {inherit: 'stimulus_trial', data: {text: 'BLUE', color: 'blue', correct:current.answers[0]}},
-        {inherit: 'stimulus_trial', data: {text: 'RED', color: 'red', correct:current.answers[1]}}
+    API.addTrialSet('S1', [
+        {inherit: 'stimulus_trial', data: {text: 'תסריט מספר 1', color: 'black'}}
     ]);
-    
-    API.addTrialSet('incong', [
-        {inherit: 'stimulus_trial', data: {text: 'BLUE', color: 'red', correct:current.answers[1]}},
-        {inherit: 'stimulus_trial', data: {text: 'RED', color: 'blue', correct:current.answers[0]}}
+    API.addTrialSet('S2', [
+        {inherit: 'stimulus_trial', data: {text: 'תסריט מספר 2', color: 'black'}}
     ]);
-    
-    API.addTrialSet('neu', [
-        {inherit: 'stimulus_trial', data: {text: 'XXXX', color: 'blue', correct:current.answers[0]}},
-        {inherit: 'stimulus_trial', data: {text: 'XXXX', color: 'red', correct:current.answers[1]}}
-    
+	API.addTrialSet('S3', [
+        {inherit: 'stimulus_trial', data: {text: 'תסריט מספר 3', color: 'black'}}
     ]);
+	API.addTrialSet('S4', [
+        {inherit: 'stimulus_trial', data: {text: 'תסריט מספר 4', color: 'black'}}
+    ]);
+	API.addTrialSet('S5', [
+        {inherit: 'stimulus_trial', data: {text: 'תסריט מספר 5', color: 'black'}}
+    ]);
+	API.addTrialSet('S6', [
+        {inherit: 'stimulus_trial', data: {text: 'תסריט מספר 6', color: 'black'}}
+    ]);
+	API.addTrialSet('S7', [
+        {inherit: 'stimulus_trial', data: {text: 'תסריט מספר 7', color: 'black'}}
+    ]);
+   
     /***********************************************
     // Sequence
      ***********************************************/
@@ -385,7 +399,7 @@ define(['pipAPI'], function(APIconstructor) {
 					mixer: 'repeat',
 					times: 1,
 					data: [
-                        {inherit:{set:'cong', type:'equalDistribution', n: 4, seed: 'congP'}, data:{block: 'practice'}}
+                        {inherit:{set:'cong', type:'equalDistribution', n: 1, seed: 'congP'}, data:{block: 'practice'}}
 					]
 				},
 				{
@@ -393,14 +407,14 @@ define(['pipAPI'], function(APIconstructor) {
 					mixer: 'repeat',
 					times: 1,
 					data: [
-                        {inherit:{set:'incong', type:'equalDistribution', n: 4, seed: 'incongP'}, data:{block: 'practice'}}
+                        {inherit:{set:'incong', type:'equalDistribution', n: 1, seed: 'incongP'}, data:{block: 'practice'}}
 					]
 				},
 				{
 					mixer: 'repeat',
 					times: 1,
 					data: [
-                        {inherit:{set:'neu', type:'equalDistribution', n: 4, seed: 'neuP'}, data:{block: 'practice'}}
+                        {inherit:{set:'neu', type:'equalDistribution', n: 1, seed: 'neuP'}, data:{block: 'practice'}}
 					]
 				}
 			]
@@ -421,22 +435,54 @@ define(['pipAPI'], function(APIconstructor) {
 					mixer: 'repeat',
 					times: 1,
 					data: [
-                        {inherit:{set:'cong', type:'equalDistribution', n: 3, seed: 'congE'}, data:{block: 'exp'}}
+                        {inherit:{set:'S1', type:'equalDistribution', n: 1, seed: 'PosTh1Real'}, data:{block: 'exp'}}
 					]
 				},
 				{
 					mixer: 'repeat',
 					times: 1,
 					data: [
-                        {inherit:{set:'incong', type:'equalDistribution', n: 3, seed: 'incongE'}, data:{block: 'exp'}}
+                        {inherit:{set:'S2', type:'equalDistribution', n: 1, seed: 'NegTh1Real'}, data:{block: 'exp'}}
 					]
 				},
 				{
 					mixer: 'repeat',
 					times: 1,
 					data: [
-                        {inherit:{set:'neu', type:'equalDistribution', n: 3, seed: 'neuE'}, data:{block: 'exp'}}
+                        {inherit:{set:'S3', type:'equalDistribution', n: 1, seed: 'PosTh2Fict'}, data:{block: 'exp'}}
 					]
+				},
+				{
+					mixer: 'repeat',
+					times: 1,
+					data: [
+                        {inherit:{set:'S4', type:'equalDistribution', n: 1, seed: 'Neu'}, data:{block: 'exp'}}
+					]
+				},
+				
+				{
+					mixer: 'repeat',
+					times: 1,
+					data: [
+                        {inherit:{set:'S5', type:'equalDistribution', n: 1, seed: 'PosTh3Real'}, data:{block: 'exp'}}
+					]
+				},
+				
+				{
+					mixer: 'repeat',
+					times: 1,
+					data: [
+                        {inherit:{set:'S6', type:'equalDistribution', n: 1, seed: 'NegTh1Fict'}, data:{block: 'exp'}}
+					]
+				},
+				
+				{
+					mixer: 'repeat',
+					times: 1,
+					data: [
+                        {inherit:{set:'S7', type:'equalDistribution', n: 1, seed: 'PosTh1Real'}, data:{block: 'exp'}}
+					]
+				
 				}
 			]
 		},

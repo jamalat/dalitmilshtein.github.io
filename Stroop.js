@@ -444,7 +444,7 @@ define(['pipAPI'], function(APIconstructor) {
             {inherit:'Q7'},
             {inherit:'Q8'},
             {inherit:'Q9'},
-            { media: '<%= trialData.text %>', css:{fontSize: '100px'}, handle:'target', data:{sid:'<%= trialData.sid %>'}}
+            { media: '<%= trialData.text %>', css:{fontSize: '30px'}, handle:'target', data:{sid:'<%= trialData.sid %>'}}
 
 
         ]

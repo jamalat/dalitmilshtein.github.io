@@ -49,7 +49,7 @@ define(['pipAPI'], function(APIconstructor) {
  	    version_id   : version_id,
  	    answers      : answers,
         instructions: {
-            inst_welcome1 : `<p>مرحبا وشكرا على مشاركتكم في بحثنا </p></br>
+            inst_welcome : `<p>مرحبا وشكرا على مشاركتكم في بحثنا </p></br>
                             <p>مدة البحث 30 د ستتلقون مقابله 30ش </p>
                             <p>فور انتهاءكم من البحث سنتلقى رسالة حول ذلك ونقوم بتحويل المبلغ الى حسابكم البنكي </p></br>
                             <p> לאחר שתסיימו לדמיין ליחצו על מקש רווח </p></br>

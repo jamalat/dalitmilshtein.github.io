@@ -451,20 +451,20 @@ define(['pipAPI'], function(APIconstructor) {
     }]);
 
     /***********************************************
-    // Specific color trials
+    // Script
      ***********************************************/
 
     
     
     API.addTrialSet('scripts', [
-        {inherit: 'stimulus_trial', data: {text: 'תסריט מספר 1', sid: 1}},
-        {inherit: 'stimulus_trial', data: {text: 'תסריט מספר 2', sid: 2}},
-        {inherit: 'stimulus_trial', data: {text: 'תסריט מספר 3', sid: 3}},
-        {inherit: 'stimulus_trial', data: {text: 'תסריט מספר 4', sid: 4}},
-        {inherit: 'stimulus_trial', data: {text: 'תסריט מספר 5', sid: 5}},
-        {inherit: 'stimulus_trial', data: {text: 'תסריט מספר 6', sid: 6}},
-        {inherit: 'stimulus_trial', data: {text: 'תסריט מספר 7', sid: 7}},
-        {inherit: 'stimulus_trial', data: {text: 'תסריט מספר 8', sid: 8}}
+        {inherit: 'stimulus_trial', data: {text: 'امي تقوم باحتضاني وتوعدني انها ستقوم بالحفاظ علي دائما ', sid: 1}},
+        {inherit: 'stimulus_trial', data: {text: 'انا  بالدكان ابحث عن هديه لوالداي بمناسبة عيد زواجهما ', sid: 2}},
+        {inherit: 'stimulus_trial', data: {text: 'والداي يحضرون لي في عيد ميلادي تذكرة سفر للخارج ', sid: 3}},
+        {inherit: 'stimulus_trial', data: {text: 'انا أقوم باحتضان اخي الصغير واعده اني ساسانده دائما ', sid: 4}},
+        {inherit: 'stimulus_trial', data: {text: 'انا وامي نحتسي الشاي سويا في ليله صيفيه هادئه ', sid: 5}},
+        {inherit: 'stimulus_trial', data: {text: 'انا وابي نحمل صناره ودلو وفي طريقنا لاصطياد الأسماك ', sid: 6}},
+        {inherit: 'stimulus_trial', data: {text: 'والداي احضروا لي تذكرة لحفل الفرقه الموسيقيه الاحب لي ', sid: 7}},
+        {inherit: 'stimulus_trial', data: {text: 'انا في المطار متجها مع ابي الى جزر المالديف ', sid: 8}}
     ]);
    
     /***********************************************

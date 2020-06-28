@@ -49,7 +49,7 @@ define(['pipAPI'], function(APIconstructor) {
  	    version_id   : version_id,
  	    answers      : answers,
         instructions: {
-            inst_welcome : `<p>ברוכים הבאים לניסוי הערכת משפטים</p></br>
+            inst_welcome : `<p>امي تقوم باحتضاني وتوعدني انها ستقوم بالحفاظ علي دائما</p></br>
                             <p>במהלך הניסוי יוצגו לפניכם 140 משפטים</p>
                             <p>אתם תתבקשו לקרוא כול משפט, ולדמיין את עצמכם בסיטואציה המתוארת בו</p></br>
                             <p> לאחר שתסיימו לדמיין ליחצו על מקש רווח </p></br>

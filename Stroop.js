@@ -96,16 +96,16 @@ define(['pipAPI'], function(APIconstructor) {
      ***********************************************/
 
     API.addStimulusSets({
-        defaultStim : [{css:{color:'black', 'font-size':'25px'}}],
+        defaultStim : [{css:{color:'black', 'font-size':'30px'}}],
         Q1          : [{inherit:'defaultStim', media: 'حدد ما  نوع الشعور الذي اتاك من  الجمله عندما تخيلت الوضع الموصوف.اذا كان إيجابي اضغط   1 واذا كان حيادي اضغط 2 واذا سلبي اضغط  3'}],
-        Q2          : [{inherit:'defaultStim', media: 'שאלה 2'}],    
-	    Q3          : [{inherit:'defaultStim', media: 'שאלה 3'}],
-        Q4          : [{inherit:'defaultStim', media: 'שאלה 4'}],      
-	    Q5          : [{inherit:'defaultStim', media: 'שאלה 5'}],
-        Q6          : [{inherit:'defaultStim', media: 'שאלה 6'}],    
-	    Q7          : [{inherit:'defaultStim', media: 'שאלה 7'}],
-        Q8          : [{inherit:'defaultStim', media: 'שאלה 8'}], 
-	    Q9          : [{inherit:'defaultStim', media: 'שאלה 9'}]   
+        Q2          : [{inherit:'defaultStim', media: 'حدد من 1 حتى 9 ما هي شدة هذا الشعور ؟1 بلاا شعر 9 شعور قوي جدا   '}],    
+	    Q3          : [{inherit:'defaultStim', media: 'حدد من 1 حتى 9 ما هو احتمال حضول ما ذكر بالجمله لك ؟1 لا يوجد احتمال 9 احتمال قوي جدا  '}],
+        Q4          : [{inherit:'defaultStim', media: 'حدد من 1 حتى 9 ما مدى سرعة قفز الوضع الموصوف الى مخيلتك فور قراءتها ؟1 يطئ جدا 9 سريع جدا '}],      
+	    Q5          : [{inherit:'defaultStim', media: 'حدد من 1 حتى 9 مدى كون الوصع الموصوف في الجمله حي ومفصل  ؟1 ليس جس ولا مفصل 9 حي ومفصل جدا '}],
+        Q6          : [{inherit:'defaultStim', media: 'حدد من 1 حتى 9 كم استهلكت من الحهد حتى تتوقف بالتفكير بالوصع الموصوف بالجمله  ؟1 بلاا جهد9 حهدكبير  '}],    
+	    Q7          : [{inherit:'defaultStim', media: '  محدد من 1 حتى 9 كم كان الوصع الموصوف في الحمله مرتيط يطموحاتك ؟1 غير مرتبط بتاتا9 مرتبط جدا  '}],
+        Q8          : [{inherit:'defaultStim', media: '  حدد من 1 حتى 9 كم كان الوصع الموصوف في الحمله مرتيط باجتياجاتك ؟1 غير مرتبط بتاتا9 مرتبط جدا  '}], 
+	    Q9          : [{inherit:'defaultStim', media: ' حدد من 1 حتى 9 كم كان الوصع الموصوف في الحمله مرتيط يمخاوفك؟1 غير مرتبط بتاتا9مرتبط جدا  '}]   
 	    
     });
 

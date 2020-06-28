@@ -97,7 +97,7 @@ define(['pipAPI'], function(APIconstructor) {
 
     API.addStimulusSets({
         defaultStim : [{css:{color:'black', 'font-size':'100px'}}],
-        Q1          : [{inherit:'defaultStim', media: 'שאלה 1'}],
+        Q1          : [{inherit:'defaultStim', media: 'حدد ما  نوع الشعور الذي اتاك من  الجمله عندما تخيلت الوضع الموصوف.اذا كان إيجابي اضغط   1 واذا كان حيادي اضغط 2 واذا سلبي اضغط  3'}],
         Q2          : [{inherit:'defaultStim', media: 'שאלה 2'}],    
 	    Q3          : [{inherit:'defaultStim', media: 'שאלה 3'}],
         Q4          : [{inherit:'defaultStim', media: 'שאלה 4'}],      

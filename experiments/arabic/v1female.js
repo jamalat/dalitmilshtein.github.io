@@ -544,7 +544,7 @@ define(['pipAPI'], function(APIconstructor) {
 			data: [
 				{   
 				    
-					mixer: 'random',
+					mixer: 'repeat',
 					times: 70,
 					data: [
                         {inherit:{set:'scripts', type:'equalDistribution', n: 70, seed:'a'}, data:{block: 'practice'}}
